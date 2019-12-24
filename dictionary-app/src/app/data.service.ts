@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private observable: Observable<any>;
+  wordChanged = new Subject<string>();
 
   private REST_API_SERVER = "http://localhost:3001/word";
 
@@ -26,16 +26,7 @@ export class DataService {
   public sendGetRequestForAll(){
     return this.httpClient.get(this.REST_API_SERVER_LIST);
   }
-
   public changeText(word:string): any{
-    this.observable =  new Observable((observer) => {
-        // observable execution
-        observer.next(word);
-        //observer.complete()
-    });
-    return this.observable;
-  }
-  public changeTextObservable(){
-    return this.observable;
+    this.wordChanged.next(word);
   }
 }

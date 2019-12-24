@@ -16,6 +16,7 @@ export class SearchBarComponent implements OnInit{
 
   private searchText:string;
   private sub:any;
+  subscription:Subscription;
   @Output() searchEmit = new EventEmitter();
   
   constructor(private dataService:DataService,private route: ActivatedRoute) { }
@@ -28,18 +29,24 @@ export class SearchBarComponent implements OnInit{
 
   ngOnInit() {
 
-    this.dataService.changeTextObservable().subscribe((response)=>{
-      console.log(response)
-    });
+    this.subscription = this.dataService.wordChanged
+      .subscribe(
+        (word: string) => {
+          this.searchText = word;
+        }
+      )
 
     this.myControl.valueChanges.subscribe((value:string)=>{
       console.log(value);
-      const filterValue = value.toLowerCase();
-      this.dataService.sendGetRequestForList(filterValue).subscribe((data: any[])=>{
+      if(value!=null && value!==''){
+        const filterValue = value.toLowerCase();
+        this.dataService.sendGetRequestForList(filterValue).subscribe((data: any[])=>{
           console.log(filterValue);
           console.log("filtered options are"+data);
           this.filteredOptions = data;
       });
+      }
+      
     });
       
       

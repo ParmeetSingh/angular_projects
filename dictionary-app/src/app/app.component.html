@@ -1,10 +1,13 @@
 <mat-toolbar color="primary">
+    <ng-container *ngIf="history.length!==0">
+        <i class="material-icons" (click)="historyBtn()">keyboard_backspace</i>&nbsp;&nbsp;
+    </ng-container>
     <span>Dictionary</span>
 </mat-toolbar>
 
 <app-search-bar (searchEmit)="searchResults($event)"></app-search-bar>
 
-<ul>
+<ul *ngIf="pristine===false">
     <mat-card class="example-card" *ngFor="let result of results">Meaning:{{result["meaning"]}}<br> Usage: {{result["pos"]|posPipe}}<br>
             <ul>
                     <div *ngIf="result['sentences']!=null">
@@ -15,8 +18,13 @@
                 </ul>
                 <div *ngIf="result['synonyms']!=null" ngClass="display: flex;">
                         Synonyms:
-                        <ng-container *ngFor="let word of result['synonyms'].split(',')">
-                            <a [routerLink]="" (click)="onClickWord(word)">{{word}}</a>
+                        <ng-container *ngFor="let synonym of result['synonyms'].split(',');let i = index">
+                            <ng-container *ngIf="i===0 && synonym!==word">
+                                        <a [routerLink]="" (click)="onClickWord(synonym)">{{synonym}}</a>
+                            </ng-container>
+                            <ng-container *ngIf="i!==0 && synonym!==word">
+                                <a [routerLink]="" (click)="onClickWord(synonym)">, {{synonym}}</a>
+                            </ng-container>
                         </ng-container>
                 </div>
                 

@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'dictionary-app';
   pristine = true;
   @Output('') searchEmit = new EventEmitter();
+  history:string[] = [];
 
   constructor(private dataService: DataService) { }
 
@@ -31,6 +32,7 @@ export class AppComponent {
       this.word = event;
       //console.log(this.word);
       this.results = data;
+      this.history.push(this.word);
     })
   }
 
@@ -44,10 +46,29 @@ export class AppComponent {
       this.results = data;
 
       this.dataService.changeText(word);
+      this.history.push(this.word);
       // this.searchText.nativeElement.set
       // this.renderer.setProperty(this.searchText.nativeElement, 'value', word);
 
     })
+  }
+
+  historyBtn(){
+    this.history.pop();
+    if(this.history.length!==0){
+      let last_word = this.history[this.history.length-1];
+      console.log("The word is",last_word);
+      this.dataService.sendGetRequest(last_word).subscribe((data: any[])=>{
+        this.word = last_word;
+        this.results = data;
+        this.dataService.changeText(last_word);
+      })  
+    }else{
+      this.pristine = true;
+      this.word = "";
+      this.dataService.changeText("");
+    }
+    
   }
   
 }
