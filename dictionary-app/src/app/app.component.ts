@@ -28,10 +28,12 @@ export class AppComponent {
 
     this.dataService.sendGetRequest(event).subscribe((data: any[])=>{
       this.pristine = false;
-      //console.log(data);
       this.word = event;
       //console.log(this.word);
-      this.results = data;
+      this.results = data[Object.keys(data)[0]]["description"];
+      //console.log("Data is");
+      //console.log(data);
+      console.log(this.results);
       this.history.push(this.word);
     })
   }
@@ -40,10 +42,13 @@ export class AppComponent {
     console.log("The word is",word);
     this.dataService.sendGetRequest(word).subscribe((data: any[])=>{
       this.pristine = false;
+      console.log(data);
+      console.log(data['word']);
+      
       //console.log(data);
       this.word = word;
       //console.log(this.word);
-      this.results = data;
+      this.results = data[Object.keys(data)[0]]["description"];
 
       this.dataService.changeText(word);
       this.history.push(this.word);
@@ -60,7 +65,7 @@ export class AppComponent {
       console.log("The word is",last_word);
       this.dataService.sendGetRequest(last_word).subscribe((data: any[])=>{
         this.word = last_word;
-        this.results = data;
+        this.results = data[Object.keys(data)[0]]["description"];
         this.dataService.changeText(last_word);
       })  
     }else{

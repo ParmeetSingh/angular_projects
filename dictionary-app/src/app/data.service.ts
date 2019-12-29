@@ -13,14 +13,19 @@ export class DataService {
 
   private REST_API_SERVER_LIST = "http://localhost:3001/words";
 
+  private FIREBASE_SERVER = "https://dictionary-bea35.firebaseio.com/words.json";
+
   constructor(private httpClient: HttpClient) { }
 
   public sendGetRequest(word:string){
-    return this.httpClient.get(this.REST_API_SERVER+"/"+word);
+    // return this.httpClient.get(this.REST_API_SERVER+"/"+word);
+    return this.httpClient.get(this.FIREBASE_SERVER+"?orderBy=\"word\"&equalTo=\""+word+"\"");
   }
 
   public sendGetRequestForList(word:string){
-    return this.httpClient.get(this.REST_API_SERVER_LIST+"/"+word);
+    let response =  this.httpClient.get(this.FIREBASE_SERVER+"?orderBy=\"word\"&limitToLast=100&startAt=\""+word+"\"&endAt=\""+word+"\uf8ff\"");
+    console.log(response);
+    return response;
   }
 
   public sendGetRequestForAll(){

@@ -14,8 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 export class SearchBarComponent implements OnInit{
 
 
-  private searchText:string;
-  private sub:any;
+  public searchText:string;
+  public sub:any;
   subscription:Subscription;
   @Output() searchEmit = new EventEmitter();
   
@@ -42,10 +42,18 @@ export class SearchBarComponent implements OnInit{
         const filterValue = value.toLowerCase();
         this.dataService.sendGetRequestForList(filterValue).subscribe((data: any[])=>{
           console.log(filterValue);
-          console.log("filtered options are"+data);
-          this.filteredOptions = data;
+          console.log(data);          
+          let arr = []
+          for(let key in data){
+           arr.push(data[key]['word']);
+          }
+          console.log(this.filteredOptions);
+          arr.sort(function(a,b){
+                return a.split().length - b.split().length
+          });
+          this.filteredOptions = arr;
       });
-      }
+    }
       
     });
       
@@ -54,6 +62,7 @@ export class SearchBarComponent implements OnInit{
 
   callSomeFunction(option){
     this.searchText = option;
+    console.log("call some function",this.searchText);
     this.searchEmit.emit(this.searchText);
   }
 

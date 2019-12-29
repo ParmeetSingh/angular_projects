@@ -27,7 +27,7 @@ app.use(cors())
 
 app.get("/words", (req, res, next) => {
       word = req.params['query_word'];
-      connection.query("SELECT word FROM word limit 100", function (err, result, fields) {
+      connection.query("SELECT distinct(word) FROM word", function (err, result, fields) {
       if (err) throw err;
       console.log(result);
       words = []

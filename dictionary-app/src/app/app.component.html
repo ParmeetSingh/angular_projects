@@ -23,7 +23,15 @@
                                         <a [routerLink]="" (click)="onClickWord(synonym)">{{synonym}}</a>
                             </ng-container>
                             <ng-container *ngIf="i!==0 && synonym!==word">
-                                <a [routerLink]="" (click)="onClickWord(synonym)">, {{synonym}}</a>
+                                    <ng-container *ngIf="i===1 && result['synonyms'].split(',')[0]===word">
+                                            <a [routerLink]="" (click)="onClickWord(synonym)">{{synonym}}</a>
+                                    </ng-container>
+                                    <ng-container *ngIf="i===1 && result['synonyms'].split(',')[0]!==word">
+                                            <a [routerLink]="" (click)="onClickWord(synonym)">, {{synonym}}</a>
+                                    </ng-container>
+                                    <ng-container *ngIf="i!==1 && result['synonyms'].split(',')[0]!==word">
+                                            <a [routerLink]="" (click)="onClickWord(synonym)">, {{synonym}}</a>
+                                    </ng-container>
                             </ng-container>
                         </ng-container>
                 </div>
