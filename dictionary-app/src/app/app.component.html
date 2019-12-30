@@ -3,6 +3,10 @@
         <i class="material-icons" (click)="historyBtn()">keyboard_backspace</i>&nbsp;&nbsp;
     </ng-container>
     <span>Dictionary</span>
+    <span class="menu-spacer"></span>
+    <div>
+        <a mat-button (click)="shuffle()"> <i class="material-icons">shuffle</i>  </a>
+    </div>
 </mat-toolbar>
 
 <app-search-bar (searchEmit)="searchResults($event)"></app-search-bar>

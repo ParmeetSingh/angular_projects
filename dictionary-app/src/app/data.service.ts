@@ -28,6 +28,11 @@ export class DataService {
     return response;
   }
 
+  public sendGetRequestForRandomString(word:string){
+    // return this.httpClient.get(this.REST_API_SERVER+"/"+word);
+    return this.httpClient.get(this.FIREBASE_SERVER+"?orderBy=\"word\"&equalTo=\""+word+"\"");
+  }
+
   public sendGetRequestForAll(){
     return this.httpClient.get(this.REST_API_SERVER_LIST);
   }

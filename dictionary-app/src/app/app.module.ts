@@ -11,6 +11,7 @@ import {MaterialModule} from './material.module';
 import { PosPipe } from './search-bar/custom-pipe';
 import { SynonymPipe } from './search-bar/custom-pipe-filter-word';
 import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     AppComponent,

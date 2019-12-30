@@ -1,21 +1,30 @@
-import { Component, ViewChild, ElementRef, Renderer2, Output } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2, Output, OnInit } from '@angular/core';
 import { DataService } from './data.service';
 import { Observable, Subject } from 'rxjs';
 import { EventEmitter } from 'events';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   title = 'dictionary-app';
   pristine = true;
   @Output('') searchEmit = new EventEmitter();
   history:string[] = [];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,private http: HttpClient) { }
+
+  ngOnInit(){
+  //   this.http.get('app/words.txt').subscribe(function (response) {
+  //     console.log(response);
+  //     // Do something with articles...
+  // });
+  
+  }
 
   results: string[] =[];
   word:string = "";
@@ -74,6 +83,9 @@ export class AppComponent {
       this.dataService.changeText("");
     }
     
+  }
+  shuffle(){
+
   }
   
 }
