@@ -18,6 +18,7 @@ export class SearchBarComponent implements OnInit{
   public sub:any;
   subscription:Subscription;
   @Output() searchEmit = new EventEmitter();
+  myplaceHolder: string = 'Search'
   
   constructor(private dataService:DataService,private route: ActivatedRoute) { }
 
@@ -71,6 +72,15 @@ export class SearchBarComponent implements OnInit{
     this.searchEmit.emit(this.searchText);
   }
 
+  checkPlaceHolder() {
+    if (this.myplaceHolder) {
+      this.myplaceHolder = null
+      return;
+    } else {
+      this.myplaceHolder = 'Enter Name'
+      return
+    }
+  }
 
 
 }

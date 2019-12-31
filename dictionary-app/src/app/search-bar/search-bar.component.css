@@ -1,8 +1,22 @@
 .mat-form-field {
-    width: calc(100% - 2.5rem);
+    width: calc(100% - 50rem);
     border-style:solid;
     border-color:#673ab7;
     color: #333;
     background: #ffffff;
+    font-size: 0.8em;
+    padding-left:15px;
+    padding-right:15px;
     
 }
+::ng-deep .mat-input-underline {
+    display: none;
+}
+
+/* ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+} */

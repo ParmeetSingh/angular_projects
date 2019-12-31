@@ -1,13 +1,13 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" style="padding: 30px">
     <ng-container *ngIf="history.length!==0">
-        <i class="material-icons" (click)="historyBtn()">keyboard_backspace</i>&nbsp;&nbsp;
+        <i style="  cursor: pointer;" class="material-icons" (click)="historyBtn()">keyboard_backspace</i>&nbsp;&nbsp;
     </ng-container>
     <span>Dictionary</span>
     <span class="menu-spacer"></span>
     <div>
         <a mat-button (click)="shuffle()"> <i class="material-icons">shuffle</i>  </a>
     </div>
-    <div class="container" style="height: 2px;margin-bottom: 100px">
+    <div class="container" style="height: 2px;margin-bottom: 100px;margin-top: 50px;">
         <app-search-bar (searchEmit)="searchResults($event)"></app-search-bar>
     </div>
 </mat-toolbar>
