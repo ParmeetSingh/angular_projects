@@ -15,15 +15,12 @@ export class AppComponent implements OnInit{
   pristine = true;
   @Output('') searchEmit = new EventEmitter();
   history:string[] = [];
+  word_list: any = [];
 
   constructor(private dataService: DataService,private http: HttpClient) { }
 
   ngOnInit(){
-  //   this.http.get('app/words.txt').subscribe(function (response) {
-  //     console.log(response);
-  //     // Do something with articles...
-  // });
-  
+    
   }
 
   results: string[] =[];
@@ -38,10 +35,7 @@ export class AppComponent implements OnInit{
     this.dataService.sendGetRequest(event).subscribe((data: any[])=>{
       this.pristine = false;
       this.word = event;
-      //console.log(this.word);
       this.results = data[Object.keys(data)[0]]["description"];
-      //console.log("Data is");
-      //console.log(data);
       console.log(this.results);
       this.history.push(this.word);
     })
@@ -51,18 +45,12 @@ export class AppComponent implements OnInit{
     console.log("The word is",word);
     this.dataService.sendGetRequest(word).subscribe((data: any[])=>{
       this.pristine = false;
-      console.log(data);
-      console.log(data['word']);
       
-      //console.log(data);
       this.word = word;
-      //console.log(this.word);
       this.results = data[Object.keys(data)[0]]["description"];
 
       this.dataService.changeText(word);
       this.history.push(this.word);
-      // this.searchText.nativeElement.set
-      // this.renderer.setProperty(this.searchText.nativeElement, 'value', word);
 
     })
   }
@@ -85,7 +73,15 @@ export class AppComponent implements OnInit{
     
   }
   shuffle(){
+    let word = this.dataService.getRandomWord();
+    this.dataService.sendGetRequest(word).subscribe((data: any[])=>{
+      this.pristine = false;
+      this.word = word;
+      this.results = data[Object.keys(data)[0]]["description"];
 
+      this.dataService.changeText(word);
+      this.history.push(this.word);
+    })
   }
   
 }

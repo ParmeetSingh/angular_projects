@@ -41,8 +41,6 @@ export class SearchBarComponent implements OnInit{
       if(value!=null && value!==''){
         const filterValue = value.toLowerCase();
         this.dataService.sendGetRequestForList(filterValue).subscribe((data: any[])=>{
-          console.log(filterValue);
-          console.log(data);          
           let arr = []
           for(let key in data){
            arr.push(data[key]['word']);
@@ -52,7 +50,14 @@ export class SearchBarComponent implements OnInit{
                 return a.split().length - b.split().length
           });
           this.filteredOptions = arr;
-      });
+        });
+        // let arr = []
+        // arr = this.dataService.getWordWheelwords(filterValue);
+        // arr.sort(function(a,b){
+        //       return a.split().length - b.split().length
+        // });
+        // console.log(this.filteredOptions);
+        // this.filteredOptions = arr;
     }
       
     });
