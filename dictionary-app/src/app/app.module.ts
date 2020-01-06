@@ -12,6 +12,23 @@ import { PosPipe } from './search-bar/custom-pipe';
 import { SynonymPipe } from './search-bar/custom-pipe-filter-word';
 import { RouterModule } from '@angular/router';
 
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider } from "angularx-social-login";
+import { CookieService } from "ngx-cookie-service";
+ 
+ 
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("80482800130-hvt5t1joifqnksbdc880hsjfn0ad6ga6.apps.googleusercontent.com")
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
+ 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,11 +43,15 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
+    SocialLoginModule,
     RouterModule.forRoot([
       { path: "", component: AppComponent}
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: AuthServiceConfig,
+    useFactory: provideConfig
+  },CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

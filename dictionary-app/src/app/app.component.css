@@ -14,4 +14,10 @@
 
 .material-icons::after{
     color: white;
+    text-decoration: none;
+}
+
+span.hyp-links{
+    color:white;
+    text-decoration: none;
 }

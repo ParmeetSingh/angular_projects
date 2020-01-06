@@ -4,6 +4,12 @@ import { Observable, Subject } from 'rxjs';
 import { EventEmitter } from 'events';
 import { HttpClient } from '@angular/common/http';
 
+import { AuthService, SocialUser } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import { CookieService } from 'ngx-cookie-service';
+import { ThrowStmt } from '@angular/compiler';
+ 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,9 +23,19 @@ export class AppComponent implements OnInit{
   history:string[] = [];
   word_list: any = [];
 
-  constructor(private dataService: DataService,private http: HttpClient) { }
+  private user: SocialUser;
+  private loggedIn: boolean;
+
+  constructor(private dataService: DataService,private http: HttpClient,
+    private authService: AuthService,private cookieService: CookieService) {
+    }
 
   ngOnInit(){
+
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+    });
     
   }
 
@@ -38,6 +54,8 @@ export class AppComponent implements OnInit{
       this.results = data[Object.keys(data)[0]]["description"];
       console.log(this.results);
       this.history.push(this.word);
+      this.cookieService.set(this.user.email,this.cookieService.get(this.user.email) + this.word);
+      console.log(this.cookieService.get(this.user.email));
     })
   }
 
@@ -84,4 +102,21 @@ export class AppComponent implements OnInit{
     })
   }
   
+  signIn(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (response) => {
+        console.log("google logged in user data is= " , response);
+        this.user = response;
+        this.cookieService.set(this.user.email,'');
+      }
+    );
+  };
+
+  signOut(): void {
+    this.authService.signOut();
+    this.user = null;
+    console.log('User signed out.');
+  }
 }
+
+
