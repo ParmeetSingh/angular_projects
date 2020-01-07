@@ -14,6 +14,8 @@ export class DataService{
   private REST_API_SERVER_LIST = "http://localhost:3001/words";
 
   private FIREBASE_SERVER = "https://dictionary-bea35.firebaseio.com/words.json";
+  private FIREBASE_SERVER_USER_HISTORY = "https://dictionary-bea35.firebaseio.com/user_history.json";
+  private FIREBASE_SERVER_USER_BOOKMARKS = "https://dictionary-bea35.firebaseio.com/user_bookmarks.json";
   word_list:any = []
   constructor(private httpClient: HttpClient) { 
     this.httpClient.get('assets/words.txt', {responseType: 'json'})
@@ -43,6 +45,24 @@ export class DataService{
     let response =  this.httpClient.get(this.FIREBASE_SERVER+"?orderBy=\"word\"&limitToLast=100&startAt=\""+word+"\"&endAt=\""+word+"\uf8ff\"");
     console.log(response);
     return response;
+  }
+
+  public addWordToUser(word:string,user_email:string){
+    let response =  this.httpClient.post(this.FIREBASE_SERVER_USER_HISTORY,{
+      "word":word,
+      "user_email":user_email
+    }).subscribe((response)=>{
+      console.log(response);
+    });
+  }
+
+  public addWordToBookmarks(word:string,user_email:string){
+    let response =  this.httpClient.post(this.FIREBASE_SERVER_USER_BOOKMARKS,{
+      "word":word,
+      "user_email":user_email
+    }).subscribe((response)=>{
+      console.log(response);
+    });
   }
 
   public sendGetRequestForRandomString(word:string){

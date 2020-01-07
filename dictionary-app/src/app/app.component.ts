@@ -22,9 +22,11 @@ export class AppComponent implements OnInit{
   @Output('') searchEmit = new EventEmitter();
   history:string[] = [];
   word_list: any = [];
+  user_history: any = [];
+  
 
-  private user: SocialUser;
-  private loggedIn: boolean;
+  user: SocialUser;
+  loggedIn: boolean;
 
   constructor(private dataService: DataService,private http: HttpClient,
     private authService: AuthService,private cookieService: CookieService) {
@@ -43,6 +45,8 @@ export class AppComponent implements OnInit{
   word:string = "";
   subject = new Subject<any>();
 
+
+
   searchResults(event){
     this.results = [];
     this.word = "";
@@ -54,8 +58,11 @@ export class AppComponent implements OnInit{
       this.results = data[Object.keys(data)[0]]["description"];
       console.log(this.results);
       this.history.push(this.word);
-      this.cookieService.set(this.user.email,this.cookieService.get(this.user.email) + this.word);
-      console.log(this.cookieService.get(this.user.email));
+      console.log(this.user);
+      if(this.user!=null){
+        console.log("entered user")
+        this.dataService.addWordToUser(this.word,this.user.email)
+      }
     })
   }
 
@@ -69,6 +76,11 @@ export class AppComponent implements OnInit{
 
       this.dataService.changeText(word);
       this.history.push(this.word);
+      console.log(this.user);
+      if(this.user!=null){
+        console.log("entered user")
+        this.dataService.addWordToUser(this.word,this.user.email)
+      }
 
     })
   }
@@ -99,6 +111,10 @@ export class AppComponent implements OnInit{
 
       this.dataService.changeText(word);
       this.history.push(this.word);
+
+      if(this.user!=null){
+        this.dataService.addWordToUser(this.word,this.user.email)
+      }
     })
   }
   
