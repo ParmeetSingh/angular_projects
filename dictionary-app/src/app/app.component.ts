@@ -133,6 +133,12 @@ export class AppComponent implements OnInit{
     this.user = null;
     console.log('User signed out.');
   }
+
+  getHistory(){
+    this.dataService.sendGetRequestHistoryByUser(this.user.email).subscribe((response)=>{
+      console.log(response);
+    });
+  }
 }
 
 

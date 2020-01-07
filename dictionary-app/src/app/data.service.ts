@@ -40,6 +40,10 @@ export class DataService{
     // return this.httpClient.get(this.REST_API_SERVER+"/"+word);
     return this.httpClient.get(this.FIREBASE_SERVER+"?orderBy=\"word\"&equalTo=\""+word+"\"");
   }
+  public sendGetRequestHistoryByUser(user:string){
+    // return this.httpClient.get(this.REST_API_SERVER+"/"+word);
+    return this.httpClient.get(this.FIREBASE_SERVER_USER_HISTORY+"?orderBy=\"user_email\"&equalTo=\""+user+"\"");
+  }
 
   public sendGetRequestForList(word:string){
     let response =  this.httpClient.get(this.FIREBASE_SERVER+"?orderBy=\"word\"&limitToLast=100&startAt=\""+word+"\"&endAt=\""+word+"\uf8ff\"");
