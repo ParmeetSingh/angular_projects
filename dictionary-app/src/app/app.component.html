@@ -65,7 +65,14 @@
                 </div>
                 
     </mat-card>    
-</ul>    
+</ul>
+
+
+<div *ngIf="user_history.length!==0">
+        <mat-card class="example-card" *ngFor="let hist of user_history">{{hist[1]}} : {{hist[0]}}</mat-card>
+</div>
+
+
 
 <!-- 
 <mat-card class="example-card">

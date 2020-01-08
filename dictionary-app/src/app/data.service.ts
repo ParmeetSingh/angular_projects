@@ -51,10 +51,29 @@ export class DataService{
     return response;
   }
 
+   formatDate(date) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    var minutes = ((date.getMinutes() < 10)?"0":"") + date.getMinutes()
+    var hour = ((date.getHours() < 10)?"0":"") + date.getHours()
+    var ampm = ((date.getHours()>12)?('PM'):'AM');
+  
+    return day + ' ' + monthNames[monthIndex] + ',' + year + ' ' + hour +":"+minutes + " " +ampm;
+  }
+  
   public addWordToUser(word:string,user_email:string){
     let response =  this.httpClient.post(this.FIREBASE_SERVER_USER_HISTORY,{
       "word":word,
-      "user_email":user_email
+      "user_email":user_email,
+      "date":this.formatDate(new Date())
     }).subscribe((response)=>{
       console.log(response);
     });

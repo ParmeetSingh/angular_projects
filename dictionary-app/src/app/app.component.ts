@@ -137,6 +137,14 @@ export class AppComponent implements OnInit{
   getHistory(){
     this.dataService.sendGetRequestHistoryByUser(this.user.email).subscribe((response)=>{
       console.log(response);
+      let usr_history = []
+      var jsonData = Object.values(response);
+      console.log
+      for (var key in jsonData) {
+        var counter = jsonData[key];
+        usr_history.push([counter.date,counter.word]);
+      }
+      this.user_history = usr_history;
     });
   }
 }
